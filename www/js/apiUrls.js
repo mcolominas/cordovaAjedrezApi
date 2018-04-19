@@ -1,6 +1,5 @@
 function AjedrezURL(){
-	//this.apiURL = "https://rocky-headland-63203.herokuapp.com/api/";
-	this.apiURL = "http://localhost:8000/api/";
+	this.apiURL = "https://rocky-headland-63203.herokuapp.com/api/";
 }
 
 AjedrezURL.prototype.login = function() {
@@ -29,6 +28,10 @@ AjedrezURL.prototype.responder = function() {
 
 AjedrezURL.prototype.verTablero = function() {
 	return this.apiURL+"tablero/ver";
+};
+
+AjedrezURL.prototype.infoTablero = function() {
+	return this.apiURL+"tablero/info";
 };
 
 AjedrezURL.prototype.contrincantes = function() {

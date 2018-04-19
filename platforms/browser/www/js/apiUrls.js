@@ -31,6 +31,14 @@ AjedrezURL.prototype.verTablero = function() {
 	return this.apiURL+"tablero/ver";
 };
 
+AjedrezURL.prototype.infoTablero = function() {
+	return this.apiURL+"tablero/info";
+};
+
+AjedrezURL.prototype.contrincantes = function() {
+	return this.apiURL+"tablero/contrincantes";
+};
+
 AjedrezURL.prototype.mover = function() {
 	return this.apiURL+"tablero/mover";
 };

@@ -32,20 +32,6 @@ User.prototype.logout = function(success, fail) {
     });
 }
 
-User.prototype.conectados = function(success, fail) {
-    ajax(api.verConectados(), "get", {"token": this.token}, function(){}, function(res){
-        switch(res.status){
-            case 0:
-                if (typeof fail === "function") fail(res.mensaje);
-                break;
-
-            case 1:
-                if (typeof success === "function") success(res.usernames);
-                break;
-        }
-    });
-}
-
 User.prototype.getToken = function() {
 	return this.token;
 }

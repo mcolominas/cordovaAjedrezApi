@@ -1,8 +1,11 @@
 var api = new AjedrezURL();
 var user = new User();
+var tablero = new Tablero(user);
+
 var app = {
     // Application Constructor
     initialize: function() {
+        $("#logout").hide();
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -16,8 +19,6 @@ var app = {
 
     // Update DOM on a Received Event
     receivedEvent: function() {
-        tablero();
-
         $("#login form").submit(function(e){
             e.preventDefault();
             var email = $(this).find("input[name='email']").val();
@@ -25,7 +26,23 @@ var app = {
 
             user.login(email, psw, function(){
                 clearError();
+                $("#login").hide();
+                $("#logout").show();
                 listaUsuarios.crear();
+            }, function(error){
+                setError(error);
+            });
+        });
+
+        $("#logout form").submit(function(e){
+            e.preventDefault();
+
+            user.logout(function(){
+                clearError();
+                $("#login").show();
+                $("#logout").hide();
+                listaUsuarios.eliminar();
+                tablero.eliminar();
             }, function(error){
                 setError(error);
             });
