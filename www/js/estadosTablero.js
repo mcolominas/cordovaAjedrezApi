@@ -12,14 +12,22 @@ var estadoTablero = {
 		});
 	},
 	refrescar: function(){
-		tablero.refrescar();
+		tablero.refrescar(estadoTablero.win, estadoTablero.lose);
 		estadoTablero.idRefrescar = setTimeout(estadoTablero.refrescar, 3000);
 	},
 	parar: function(){
-		setTimeout(estadoTablero.idRefrescar);
+		clearTimeout(estadoTablero.idRefrescar);
 	},
 	eliminar: function(){
-		setTimeout(estadoTablero.idRefrescar);
+		clearTimeout(estadoTablero.idRefrescar);
 		tablero.eliminar();
+	},
+	win: function(){
+		estadoTablero.eliminar();
+		tablero.win();
+	},
+	lose: function(){
+		estadoTablero.eliminar();
+		tablero.lose();
 	}
 }

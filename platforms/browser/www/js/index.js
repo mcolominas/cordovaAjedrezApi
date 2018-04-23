@@ -1,6 +1,7 @@
 var api = new AjedrezURL();
 var user = new User();
 var tablero = new Tablero(user);
+var destinationType;
 
 var app = {
     // Application Constructor
@@ -14,6 +15,7 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
+        destinationType=navigator.camera.DestinationType;
         this.receivedEvent();
     },
 

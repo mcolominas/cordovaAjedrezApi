@@ -133,7 +133,7 @@ Tablero.prototype.eliminar = function() {
     this.load = false;
 };
 
-Tablero.prototype.refrescar = function() {
+Tablero.prototype.refrescar = function(win, lose) {
     let self = this;
     const fichasIcono = {
         "torre": "♖",
@@ -149,9 +149,9 @@ Tablero.prototype.refrescar = function() {
             case 0:
             if(res.mensaje == "No se ha encontrado la partida."){
                 if(self.load && self.isMiTurno()){
-                    self.win();
+                    win();
                 }else if(self.load){
-                    self.lose();
+                    lose();
                 }
             }else setError(res.mensaje);
             break;
@@ -208,23 +208,62 @@ Tablero.prototype.setTurno = function($color) {
 };
 
 Tablero.prototype.win = function(){
-    this.eliminar();
-    let div = $("<div class='alert alert-success'>Enorabuena, has ganado!!</div>")
+    let self = this;
+    let id = null;
+    let div = $("<div class='alert alert-success'>Enorabuena, has ganado!!</div>");
+    let btn = $("<button class='btn btn-success'>Hacerme una foto</button>").click(function(){
+        capturePhoto();
+        clearTimeout(id);
+    });
+    let img = $('<img class="centerBlock" style="display:none;width:120px;height:120px;" id="smallImage" src="" />');
     $("#tablero").before(div);
-    setTimeout(function(){
-        div.remove();
+    $("#tablero").before(btn);
+    $("#tablero").before(img);
+
+    id=setTimeout(function(){
+        removeMensaje();
+        self.crear();
     }, 5000);
-    this.crear();
+
+    function capturePhoto() {
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+            destinationType: destinationType.DATA_URL });
+    }
+
+    function onPhotoDataSuccess(imageData) {
+        btn.remove();
+        btn = $("<button class='btn btn-success'>Enviar</button>").click(function(){
+            removeMensaje();
+        });
+        var smallImage = document.getElementById('smallImage');
+        smallImage.style.display = 'block';
+        smallImage.src = "data:image/jpeg;base64," + imageData;
+
+        $(smallImage).before(btn);
+    }
+
+    function onFail(message) {
+        removeMensaje();
+        setError(message);
+    }
+
+    function removeMensaje(){
+        div.remove();
+        btn.remove();
+        img.remove();
+        self.crear();
+    }
 }
 
 Tablero.prototype.lose = function(){
-    this.eliminar();
+    let self = this;
     let div = $("<div class='alert alert-danger'>Has perdido, otro dia ganaras!!</div>");
     $("#tablero").before(div);
+
     setTimeout(function(){
         div.remove();
+        self.crear();
     }, 5000);
-    this.crear();
 }
 
 

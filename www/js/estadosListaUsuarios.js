@@ -84,12 +84,14 @@ var listaUsuarios = {
 				listaUsuarios.listaInvitaciones.children().remove();
 				var lista = res.mensaje;
 				listaUsuarios.arrayInvitaciones = lista;
+				listaUsuarios.listaInvitaciones.parent().find("h3").remove();
 				for(var i = 0; i < lista.length; i++){
 					var name = lista[i].name;
 					if(i == 0 && listaUsuarios.listaInvitaciones.parent().find("h3").length == 0){
 						var h3 = $("<h3>Invitaciones pendientes</h3>");
 						listaUsuarios.listaInvitaciones.before(h3);
 					}
+
 					var aceptar = $("<a class='btn btn-primary pt-1 pb-1 ml-1 mr-1' href='#'>Aceptar</a>").click(function(e){
 						e.preventDefault();
 						listaUsuarios.responder(this, name, true);
