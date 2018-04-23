@@ -26,12 +26,27 @@ function ajax(url, method, params, loading, respuesta){
         });
 }
 let $idError = null;
+let $idAlert = null;
 function setError(mensaje){
+    $("#error").show();
     $("#error span").text(mensaje);
     clearTimeout($idError);
-    $idError = setTimeout(clearError, 3000);
+    $idError = setTimeout(clearError, 5000);
 }
 
 function clearError(){
+    $("#error").hide();
     $("#error span").text("");
+}
+
+function setAlert(mensaje){
+    $("#alert").show();
+    $("#alert span").text(mensaje);
+    clearTimeout($idError);
+    $idAlert = setTimeout(clearAlert, 5000);
+}
+
+function clearAlert(){
+    $("#alert").hide();
+    $("#alert span").text("");
 }

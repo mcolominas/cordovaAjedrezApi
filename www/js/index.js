@@ -29,6 +29,7 @@ var app = {
                 $("#login").hide();
                 $("#logout").show();
                 listaUsuarios.crear();
+                tablero.crear();
             }, function(error){
                 setError(error);
             });

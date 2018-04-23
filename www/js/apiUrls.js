@@ -1,5 +1,6 @@
 function AjedrezURL(){
 	this.apiURL = "https://rocky-headland-63203.herokuapp.com/api/";
+	//this.apiURL = "http://localhost:8000/api/";
 }
 
 AjedrezURL.prototype.login = function() {

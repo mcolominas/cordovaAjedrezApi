@@ -29,14 +29,14 @@ var listaUsuarios = {
 		ajax(api.verConectados(), "get", {"token": user.token}, function(){}, function(res){
 			switch(res.status){
 				case 0:
-				setError(res.mensaje);
+				setAlert(res.mensaje);
 				break;
 
 				case 1:
 				var lista = res.usernames;
 				listaUsuarios.listaUsuariosConectados.children().remove();
 				for(var i = 0; i < lista.length; i++){
-					var a = $("<a type='invitar' href='#'>Invitar</a>").click(function(e){
+					var a = $("<a class='btn btn-primary pt-1 pb-1 ml-1 mr-1' type='invitar' href='#'>Invitar</a>").click(function(e){
 						e.preventDefault();
 						listaUsuarios.invitar($(this), $(this).parent().attr("name"));
 					});
@@ -52,7 +52,7 @@ var listaUsuarios = {
 
 					for(var e = 0; e < listaUsuarios.arrayContrincantes.length; e++){
 						if(listaUsuarios.arrayContrincantes[e].name == lista[i]){
-							var jugar = $("<a type='jugar' href='#'>Jugar</a>").click({name: lista[i]}, function(e){
+							var jugar = $("<a class='btn btn-success pt-1 pb-1 ml-1 mr-1' type='jugar' href='#'>Jugar</a>").click({name: lista[i]}, function(e){
 								e.preventDefault();
 								if(tablero instanceof Tablero == false) return;
 								estadoTablero.crear(e.data.name);
@@ -78,7 +78,7 @@ var listaUsuarios = {
 		ajax(api.verInvitaciones(), "get", {"token": user.getToken()}, function(){}, function(res){
 			switch(res.status){
 				case 0:
-				setError(res.mensaje);
+				setAlert(res.mensaje);
 				break;
 				case 1:
 				listaUsuarios.listaInvitaciones.children().remove();
@@ -86,15 +86,15 @@ var listaUsuarios = {
 				listaUsuarios.arrayInvitaciones = lista;
 				for(var i = 0; i < lista.length; i++){
 					var name = lista[i].name;
-					if(i == 0){
+					if(i == 0 && listaUsuarios.listaInvitaciones.parent().find("h3").length == 0){
 						var h3 = $("<h3>Invitaciones pendientes</h3>");
-						listaUsuarios.listaInvitaciones.append(h3);
+						listaUsuarios.listaInvitaciones.before(h3);
 					}
-					var aceptar = $("<a href='#'>Aceptar</a>").click(function(e){
+					var aceptar = $("<a class='btn btn-primary pt-1 pb-1 ml-1 mr-1' href='#'>Aceptar</a>").click(function(e){
 						e.preventDefault();
 						listaUsuarios.responder(this, name, true);
 					});
-					var rechazar = $("<a href='#'>Rechazar</a>").click(function(e){
+					var rechazar = $("<a class='btn btn-danger pt-1 pb-1 ml-1 mr-1' href='#'>Rechazar</a>").click(function(e){
 						e.preventDefault();
 						listaUsuarios.responder(this, name, false);
 					});
@@ -123,7 +123,7 @@ var listaUsuarios = {
 				listaUsuarios.arrayContrincantes = res.mensaje;
 				break;
 				case 0:
-				setError(res.mensaje);
+				setAlert(res.mensaje);
 				break;
 			}
 		});
@@ -132,18 +132,13 @@ var listaUsuarios = {
 	invitar: function(obj, name){
 		if(user instanceof User == false) return;
 		ajax(api.invitar(), "get", {"token": user.getToken(), "name": name}, function(){}, function(res){
-			setError(res.mensaje);
-			/*switch(res.status){
-				case 1:
-				obj.remove();
-				break;
-			}*/
+			setAlert(res.mensaje);
 		});
 	},
 	responder: function(obj, name, respuesta){
 		respuesta = respuesta ? 1 : 0;
 		ajax(api.responder(), "get", {"token": user.getToken(), "name": name, "respuesta": respuesta}, function(){}, function(res){
-			setError(res.mensaje);
+			setAlert(res.mensaje);
 		});
 	}
 }

@@ -1,50 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
-    style-src 'self' 'unsafe-inline';
-    media-src *;
-    img-src 'self' data: content:;
-    script-src * 'unsafe-eval' 'unsafe-inline';
-    connect-src * 'unsafe-eval' 'unsafe-inline';">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>Hello World</title>
+	<meta http-equiv="Content-Security-Policy" content="
+	default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
+	style-src 'self' 'unsafe-inline';
+	media-src *;
+	img-src 'self' data: content:;
+	script-src * 'unsafe-eval' 'unsafe-inline';
+	connect-src * 'unsafe-eval' 'unsafe-inline';">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<title>Hello World</title>
 </head>
 <body>
-    <div>
-        <div id="error">
-            <span></span>
-        </div>
-        <div id="login">
-            <form>
-                <input type="email" name="email" placeholder="Email ..."> 
-                <input type="password" name="password" placeholder="Contraseña ...">
-                <input type="submit" value="login"> 
-            </form>
-        </div>
-        <div id="logout">
-            <form>
-                <input type="submit" value="logout"> 
-            </form>
-        </div>
-        <table id="tablero"></table>
-        <div id="listaInvitaciones"></div>
-        <div id="listaUsuarios"></div>
-    </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div id="logout" class="col-12 text-right">
+				<form>
+					<button type="submit" class="btn btn-primary">Desconectarse</button>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div id="error" class="pt-3 ocultar col-12">
+				<div class="alert alert-danger pt-2 pb-2" role="alert">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="alert" class="pt-3 ocultar col-12">
+				<div class="alert alert-info pt-2 pb-2" role="alert">
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="login" class="pt-3 col-12 offset-0 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+				<div class="card">
+					<div class="card-header">
+						Login
+					</div>
+					<div class="card-body">
+						<form>
+							<div class="form-group">
+								<label for="Iemail">Email:</label>
+								<input type="email" id="Iemail" class="form-control" name="email" placeholder="Email ..." required>
+							</div>
+							<div class="form-group">
+								<label for="Ipsw">Contraseña:</label>
+								<input type="password" name="password" id="Ipsw" class="form-control" placeholder="Contraseña ..." required>
+							</div>
+							<button type="submit" class="btn btn-primary btn-block">Entrar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-12 col-md-8">
+			<table class="centerBlock" id="tablero"></table>
+		</div>
+		<div class="col-12 col-md-4">
+			<div id="listaInvitaciones"></div>
+			<div id="listaUsuarios"></div>
+		</div>
+	</div>
+</div>
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/funcionesGenerales.js"></script>
-    <script type="text/javascript" src="js/apiUrls.js"></script>
-    <script type="text/javascript" src="js/user.js"></script>
-    <script type="text/javascript" src="js/tablero.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
 
-    <script type="text/javascript" src="js/estadosTablero.js"></script>
-    <script type="text/javascript" src="js/estadosListaUsuarios.js"></script>
+<script type="text/javascript" src="vendor/jquery/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/funcionesGenerales.js"></script>
+<script type="text/javascript" src="js/apiUrls.js"></script>
+<script type="text/javascript" src="js/user.js"></script>
+<script type="text/javascript" src="js/tablero.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript" src="js/estadosTablero.js"></script>
+<script type="text/javascript" src="js/estadosListaUsuarios.js"></script>
 </body>
 </html>

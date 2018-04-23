@@ -7,14 +7,17 @@ function Tablero(user){
     this.load = false;
 }
 
-Tablero.prototype.crear = function(name) {
+Tablero.prototype.inicializar = function(name) {
+    this.name = name;
+    this.crear();
+
+}
+
+Tablero.prototype.crear = function() {
     this.eliminar();
     let self = this;
-    this.name = name;
     
     let tablero = $("#tablero");
-    tablero.before($("<h3 id='titulo_turno'>Turno: <span></span></h3>"));
-    tablero.before($("<p id='miColor'>Tus fichas son las: <span></span></p>"));
     
     $("body").append($("<div id='fantasma'></div>"));
 
@@ -107,6 +110,12 @@ Tablero.prototype.loadInfo = function(success, fail) {
             fail(res.mensaje);
             case 1:
             self.miColor = res.partida.color;
+
+            let tablero = $("#tablero");
+            let div = $("<div id='infoTablero' class='text-center'>");
+            div.append($("<h3 id='titulo_turno'>Turno: <span></span></h3>"));
+            div.append($("<p id='miColor'>Tus fichas son las: <span></span></p>"));
+            tablero.before(div);
             $("#miColor").find("span").text(self.miColor == "b" ? "Blancas" : "Negras");
             success();
         }
@@ -119,8 +128,8 @@ Tablero.prototype.limpiar = function() {
 Tablero.prototype.eliminar = function() {
     $("#tablero").children().remove();
     $("#fantasma").remove();
+    $("#infoTablero").remove();
     this.turno = null;
-    this.name = null;
     this.load = false;
 };
 
@@ -138,7 +147,13 @@ Tablero.prototype.refrescar = function() {
 
         switch(res.status){
             case 0:
-            setError(res.mensaje);
+            if(res.mensaje == "No se ha encontrado la partida."){
+                if(self.load && self.isMiTurno()){
+                    self.win();
+                }else if(self.load){
+                    self.lose();
+                }
+            }else setError(res.mensaje);
             break;
             case 1:
             if(self.load && self.isMiTurno()) return; //No recargar el tablero si no ha obtenido la informacion o es su turno y ya a sido cargado
@@ -191,5 +206,25 @@ Tablero.prototype.setTurno = function($color) {
 
     $("#titulo_turno").find("span").text(this.turno == "b" ? "Blanco" : "Negro");
 };
+
+Tablero.prototype.win = function(){
+    this.eliminar();
+    let div = $("<div class='alert alert-success'>Enorabuena, has ganado!!</div>")
+    $("#tablero").before(div);
+    setTimeout(function(){
+        div.remove();
+    }, 5000);
+    this.crear();
+}
+
+Tablero.prototype.lose = function(){
+    this.eliminar();
+    let div = $("<div class='alert alert-danger'>Has perdido, otro dia ganaras!!</div>");
+    $("#tablero").before(div);
+    setTimeout(function(){
+        div.remove();
+    }, 5000);
+    this.crear();
+}
 
 

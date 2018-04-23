@@ -1,7 +1,7 @@
 var estadoTablero = {
 	idRefrescar: null,
 	crear: function(nombre) {
-		tablero.crear(nombre);
+		tablero.inicializar(nombre);
 		estadoTablero.loadInfo();
 	},
 	loadInfo: function(){
